@@ -1162,24 +1162,33 @@ export default function App({ onEnterAdmin, onExitAdmin, isAdminProp }) {
 
   return (
     <AppContext.Provider value={{ page, setPage, classRegistrations, registerForClass, openReservation, feedCelebrations, celebrateFeed }}>
-      <div style={{ position: "relative", height: "100%", overflow: "hidden", background: T.bgDim, fontFamily: "'Archivo', system-ui, sans-serif", display: "flex", flexDirection: "column" }}>
-        <header style={{ flexShrink: 0, background: T.bg, color: "#fff", padding: "10px 14px", display: "flex", alignItems: "center", justifyContent: "space-between", zIndex: 30 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <div style={{ width: 34, height: 34, borderRadius: 8, background: T.accent, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Space Grotesk', serif", fontSize: 14, color: "#fff", fontWeight: 700 }}>{STUDIO_CONFIG.logoMark}</div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <span style={{ fontFamily: "'Space Grotesk', serif", fontSize: 18, lineHeight: 1, fontWeight: 600 }}>{STUDIO_CONFIG.name}</span>
-              <span style={{ fontSize: 8, color: "#71717a", textTransform: "uppercase", letterSpacing: "0.15em" }}>{STUDIO_CONFIG.subtitle}</span>
+      <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", fontFamily: "'Archivo', system-ui, sans-serif" }}>
+
+        {/* Scrollable content area — EXACT: absolute, top 0, bottom 64px */}
+        <div ref={contentRef} style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 64, overflowY: "auto", scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch", background: T.bgDim }}>
+          <style>{`.app-scroll::-webkit-scrollbar { display: none; }`}</style>
+
+          {/* Header inside scroll area */}
+          <header style={{ position: "sticky", top: 0, background: T.bg, color: "#fff", padding: "10px 14px", display: "flex", alignItems: "center", justifyContent: "space-between", zIndex: 30 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ width: 34, height: 34, borderRadius: 8, background: T.accent, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Space Grotesk', serif", fontSize: 14, color: "#fff", fontWeight: 700 }}>{STUDIO_CONFIG.logoMark}</div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <span style={{ fontFamily: "'Space Grotesk', serif", fontSize: 18, lineHeight: 1, fontWeight: 600 }}>{STUDIO_CONFIG.name}</span>
+                <span style={{ fontSize: 8, color: "#71717a", textTransform: "uppercase", letterSpacing: "0.15em" }}>{STUDIO_CONFIG.subtitle}</span>
+              </div>
             </div>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <button onClick={() => { if (onEnterAdmin) onEnterAdmin(); else setIsAdminLocal(true); setPage("admin-dashboard"); }} style={{ padding: 8, borderRadius: 8, border: "none", background: "transparent", cursor: "pointer", color: T.accent }}><Shield size={20} /></button>
-            <button onClick={() => setShowNotifications(true)} style={{ padding: 8, borderRadius: 8, border: "none", background: "transparent", cursor: "pointer", color: "#fff", position: "relative" }}><Bell size={20} />{unreadCount > 0 && <span style={{ position: "absolute", top: 4, right: 4, width: 14, height: 14, borderRadius: "50%", background: T.accent, fontSize: 9, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff" }}>{unreadCount}</span>}</button>
-            <button onClick={() => setShowSettings(true)} style={{ padding: 8, borderRadius: 8, border: "none", background: "transparent", cursor: "pointer", color: "#fff" }}><Settings size={20} /></button>
-          </div>
-        </header>
+            <div style={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <button onClick={() => { if (onEnterAdmin) onEnterAdmin(); else setIsAdminLocal(true); setPage("admin-dashboard"); }} style={{ padding: 8, borderRadius: 8, border: "none", background: "transparent", cursor: "pointer", color: T.accent }}><Shield size={20} /></button>
+              <button onClick={() => setShowNotifications(true)} style={{ padding: 8, borderRadius: 8, border: "none", background: "transparent", cursor: "pointer", color: "#fff", position: "relative" }}><Bell size={20} />{unreadCount > 0 && <span style={{ position: "absolute", top: 4, right: 4, width: 14, height: 14, borderRadius: "50%", background: T.accent, fontSize: 9, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff" }}>{unreadCount}</span>}</button>
+              <button onClick={() => setShowSettings(true)} style={{ padding: 8, borderRadius: 8, border: "none", background: "transparent", cursor: "pointer", color: "#fff" }}><Settings size={20} /></button>
+            </div>
+          </header>
 
-        <main ref={contentRef} style={{ flex: 1, overflowY: "auto", paddingBottom: 64, scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}>{renderPage()}</main>
+          {/* Page content */}
+          {renderPage()}
+        </div>
 
+        {/* More menu overlay */}
         {showMore && (
           <div onClick={() => setShowMore(false)} style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.5)", backdropFilter: "blur(4px)", zIndex: 40 }}>
             <div onClick={e => e.stopPropagation()} style={{ position: "absolute", bottom: 72, left: 16, right: 16, background: T.bgCard, borderRadius: 16, padding: "14px 12px", boxShadow: "0 8px 32px rgba(0,0,0,.15)" }}>
@@ -1194,19 +1203,19 @@ export default function App({ onEnterAdmin, onExitAdmin, isAdminProp }) {
           </div>
         )}
 
-        <nav style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 64, background: T.bgCard, borderTop: `1px solid ${T.border}`, zIndex: 50 }}>
-          <div style={{ display: "flex", justifyContent: "space-around", padding: "6px 4px 10px" }}>
-            {mainTabs.map(tab => {
-              const active = tab.id === "more" ? (isMoreActive || showMore) : page === tab.id;
-              return (
-                <button key={tab.id} onClick={() => tab.id === "more" ? setShowMore(true) : setPage(tab.id)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, padding: "6px 12px", borderRadius: 10, border: "none", background: "transparent", cursor: "pointer", color: active ? T.accent : T.textFaint }}>
-                  <tab.icon size={20} strokeWidth={active ? 2.5 : 2} /><span style={{ fontSize: 10, fontWeight: active ? 700 : 500 }}>{tab.label}</span>
-                </button>
-              );
-            })}
-          </div>
+        {/* Bottom nav — EXACT: absolute, bottom 0, height 64px, z-index 50 */}
+        <nav style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 64, background: "#fff", borderTop: "1px solid #eee", display: "flex", alignItems: "center", justifyContent: "space-around", zIndex: 50 }}>
+          {mainTabs.map(tab => {
+            const active = tab.id === "more" ? (isMoreActive || showMore) : page === tab.id;
+            return (
+              <button key={tab.id} onClick={() => tab.id === "more" ? setShowMore(true) : setPage(tab.id)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, padding: "6px 12px", borderRadius: 10, border: "none", background: "transparent", cursor: "pointer", color: active ? T.accent : T.textFaint }}>
+                <tab.icon size={20} strokeWidth={active ? 2.5 : 2} /><span style={{ fontSize: 10, fontWeight: active ? 700 : 500 }}>{tab.label}</span>
+              </button>
+            );
+          })}
         </nav>
 
+        {/* Modals */}
         {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
         {showNotifications && <NotificationsModal onClose={() => setShowNotifications(false)} />}
         {reservationClass && <ReservationModal classData={reservationClass} onConfirm={registerForClass} onClose={() => setReservationClass(null)} />}

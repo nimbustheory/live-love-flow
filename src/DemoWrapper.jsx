@@ -86,10 +86,10 @@ export default function DemoWrapper() {
           }}>
             {/* Notch */}
             <div style={{ width: 120, height: 6, background: "#2a2a34", borderRadius: 3, margin: "0 auto 8px" }} />
-            {/* Screen container */}
+            {/* Screen container — EXACT: 390x844, position relative, overflow hidden */}
             <div style={{
-              width: 390, height: 780, borderRadius: 28, overflow: "hidden", background: "#0e0e16",
-              position: "relative"
+              width: 390, height: 844, position: "relative", overflow: "hidden",
+              borderRadius: 40, background: "#fff"
             }}>
               <App
                 onEnterAdmin={() => setIsAdmin(true)}
