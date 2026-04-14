@@ -20,7 +20,7 @@ export const DEMO_CONFIG = {
     {
       title: "Admin Dashboard",
       description: "Real-time analytics for your Green Lake studio. Track attendance across Flow, Flow Fit, and Stretch classes. Monitor revenue, manage your teaching roster, and broadcast announcements. Two heated studios within 3,000 sq ft of boutique space.",
-      icon: "LayoutDashboard",
+      icon: "Shield",
     },
     {
       title: "Built for Live Love Flow",
