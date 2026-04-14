@@ -365,7 +365,7 @@ function HomePage() {
     <div>
       <PageHero image={STUDIO_IMAGES.home} title={<>{STUDIO_CONFIG.heroLine1}<br/><span style={{ color: T.accent, fontStyle: "italic" }}>{STUDIO_CONFIG.heroLine2}</span></>} subtitle={STUDIO_CONFIG.description} />
 
-      <section style={{ padding: "0 16px", marginTop: -16, position: "relative", zIndex: 10 }}>
+      <section style={{ padding: "0 16px", position: "relative", zIndex: 10 }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
           {[
             { icon: Calendar, label: "Reserve", page: "schedule", color: T.accent },
