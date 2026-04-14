@@ -1136,8 +1136,8 @@ export default function App({ onEnterAdmin, onExitAdmin, isAdminProp }) {
   if (isAdmin) {
     return (
       <AppContext.Provider value={{ page, setPage, classRegistrations, registerForClass, openReservation, feedCelebrations, celebrateFeed }}>
-        <div style={{ display: "flex", height: "100%", fontFamily: "'Archivo', system-ui, sans-serif", background: "#f3f4f6" }}>
-          <aside style={{ width: 220, background: "#fff", color: "#1f2937", display: "flex", flexDirection: "column", flexShrink: 0, borderRight: "1px solid #e5e7eb" }}>
+        <div style={{ display: "flex", width: "100%", height: "100%", fontFamily: "'Archivo', system-ui, sans-serif", background: "#f3f4f6" }}>
+          <aside style={{ width: 240, background: "#fff", color: "#1f2937", display: "flex", flexDirection: "column", flexShrink: 0, borderRight: "1px solid #e5e7eb" }}>
             <div style={{ padding: "16px 14px", borderBottom: "1px solid #e5e7eb" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <div style={{ width: 32, height: 32, borderRadius: 8, background: T.accent, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Space Grotesk', serif", fontSize: 14, color: "#fff", fontWeight: 700 }}>{STUDIO_CONFIG.logoMark}</div>
@@ -1162,7 +1162,7 @@ export default function App({ onEnterAdmin, onExitAdmin, isAdminProp }) {
 
   return (
     <AppContext.Provider value={{ page, setPage, classRegistrations, registerForClass, openReservation, feedCelebrations, celebrateFeed }}>
-      <div style={{ display: "flex", flexDirection: "column", height: "100%", background: T.bgDim, fontFamily: "'Archivo', system-ui, sans-serif", position: "relative" }}>
+      <div style={{ position: "relative", height: "100%", overflow: "hidden", background: T.bgDim, fontFamily: "'Archivo', system-ui, sans-serif", display: "flex", flexDirection: "column" }}>
         <header style={{ flexShrink: 0, background: T.bg, color: "#fff", padding: "10px 14px", display: "flex", alignItems: "center", justifyContent: "space-between", zIndex: 30 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <div style={{ width: 34, height: 34, borderRadius: 8, background: T.accent, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Space Grotesk', serif", fontSize: 14, color: "#fff", fontWeight: 700 }}>{STUDIO_CONFIG.logoMark}</div>
@@ -1178,11 +1178,11 @@ export default function App({ onEnterAdmin, onExitAdmin, isAdminProp }) {
           </div>
         </header>
 
-        <main ref={contentRef} style={{ flex: 1, overflowY: "auto", paddingBottom: 70 }}>{renderPage()}</main>
+        <main ref={contentRef} style={{ flex: 1, overflowY: "auto", paddingBottom: 64, scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}>{renderPage()}</main>
 
         {showMore && (
           <div onClick={() => setShowMore(false)} style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.5)", backdropFilter: "blur(4px)", zIndex: 40 }}>
-            <div onClick={e => e.stopPropagation()} style={{ position: "absolute", bottom: 68, left: 16, right: 16, background: T.bgCard, borderRadius: 16, padding: "14px 12px", boxShadow: "0 8px 32px rgba(0,0,0,.15)" }}>
+            <div onClick={e => e.stopPropagation()} style={{ position: "absolute", bottom: 72, left: 16, right: 16, background: T.bgCard, borderRadius: 16, padding: "14px 12px", boxShadow: "0 8px 32px rgba(0,0,0,.15)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 6px 8px" }}><span style={{ fontFamily: "'Space Grotesk', serif", fontSize: 20, fontWeight: 600 }}>More</span><button onClick={() => setShowMore(false)} style={{ padding: 4, borderRadius: 6, border: "none", background: "transparent", cursor: "pointer" }}><X size={18} color={T.textMuted} /></button></div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                 {moreItems.map(item => {
@@ -1194,7 +1194,7 @@ export default function App({ onEnterAdmin, onExitAdmin, isAdminProp }) {
           </div>
         )}
 
-        <nav style={{ flexShrink: 0, background: T.bgCard, borderTop: `1px solid ${T.border}`, zIndex: 30 }}>
+        <nav style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 64, background: T.bgCard, borderTop: `1px solid ${T.border}`, zIndex: 50 }}>
           <div style={{ display: "flex", justifyContent: "space-around", padding: "6px 4px 10px" }}>
             {mainTabs.map(tab => {
               const active = tab.id === "more" ? (isMoreActive || showMore) : page === tab.id;

@@ -89,14 +89,12 @@ export default function DemoWrapper() {
             {/* Screen container */}
             <div style={{
               width: 390, height: 780, borderRadius: 28, overflow: "hidden", background: "#0e0e16",
-              position: "relative", transform: "translateZ(0)"
+              position: "relative"
             }}>
-              <div style={{ width: "100%", height: "100%", overflowY: "auto", overflowX: "hidden" }}>
-                <App
-                  onEnterAdmin={() => setIsAdmin(true)}
-                  onExitAdmin={() => setIsAdmin(false)}
-                />
-              </div>
+              <App
+                onEnterAdmin={() => setIsAdmin(true)}
+                onExitAdmin={() => setIsAdmin(false)}
+              />
             </div>
             {/* Home indicator */}
             <div style={{ width: 134, height: 5, background: "#3a3a44", borderRadius: 3, margin: "8px auto 4px" }} />
